@@ -1,0 +1,6 @@
+build/
+install/
+log/
+esp32_firmware/.pio/
+__pycache__/
+*.pyc
