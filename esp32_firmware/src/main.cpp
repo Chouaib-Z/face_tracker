@@ -7,9 +7,9 @@
 #include <ESP32Servo.h>
 
 #define SERVO_PIN 13
-#define WIFI_SSID "TP-Link_0FC8"
-#define WIFI_PASS "CuccinaRustica69"
-#define AGENT_IP  "192.168.0.136"
+#define WIFI_SSID "YOUR WIFI NAME"
+#define WIFI_PASS "YOUR WIFI PASSWORD"
+#define AGENT_IP  "IP ADDRESS OF YOUR PC"
 #define AGENT_PORT 8888
 
 Servo servo;

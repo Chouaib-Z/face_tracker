@@ -11,7 +11,7 @@ class FaceDetectorNode(Node):
         self.get_logger().info('Node started successfully!')
         qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.publisher = self.create_publisher(Int32, 'face_position', qos)
-        self.model = YOLO('/home/chouaib/model.pt')
+        self.model = YOLO('PATH/TO/YOUR/model.pt')
         self.cap = cv2.VideoCapture(0)
         self.timer = self.create_timer(0.05, self.detect)
 
