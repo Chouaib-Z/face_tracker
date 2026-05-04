@@ -4,6 +4,7 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy
 from std_msgs.msg import Int32
 from ultralytics import YOLO
 import cv2
+import time
 
 class FaceDetectorNode(Node):
     def __init__(self):
@@ -11,14 +12,25 @@ class FaceDetectorNode(Node):
         self.get_logger().info('Node started successfully!')
         qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.publisher = self.create_publisher(Int32, 'face_position', qos)
-        self.model = YOLO('PATH/TO/YOUR/model.pt')
-        self.cap = cv2.VideoCapture(0)
+        self.model = YOLO('/home/chouaib/model.pt')
+        self.cap = cv2.VideoCapture(1)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         self.timer = self.create_timer(0.05, self.detect)
 
     def detect(self):
+        # flush buffer - read and discard old frames
+        for _ in range(3):
+            self.cap.grab()
+
         ret, frame = self.cap.read()
         if not ret:
             return
+        
+        start = time.time()
+        results = self.model(frame, verbose=False, imgsz=320)
+        elapsed = time.time() - start
+        self.get_logger().info(f'YOLO time: {elapsed*1000:.0f}ms')
 
         width = frame.shape[1]
         results = self.model(frame, verbose=False, imgsz=320)
@@ -34,10 +46,10 @@ class FaceDetectorNode(Node):
             x_center = (x1 + x2) / 2
             ratio = x_center / width
 
-            if ratio < 0.4:
+            if ratio < 0.35:
                 msg.data = 1
                 label = "LEFT"
-            elif ratio > 0.6:
+            elif ratio > 0.65:
                 msg.data = -1
                 label = "RIGHT"
             else:

@@ -7,9 +7,9 @@
 #include <ESP32Servo.h>
 
 #define SERVO_PIN 13
-#define WIFI_SSID "YOUR WIFI NAME"
-#define WIFI_PASS "YOUR WIFI PASSWORD"
-#define AGENT_IP  "IP ADDRESS OF YOUR PC"
+#define WIFI_SSID "Rouia"
+#define WIFI_PASS "tt555555"
+#define AGENT_IP  "192.168.222.232"
 #define AGENT_PORT 8888
 
 Servo servo;
@@ -27,9 +27,9 @@ void subscription_callback(const void * msgin) {
     Serial.println("Received: " + String(msg->data));
 
     if (msg->data == 1) {
-        current_angle = min(current_angle + 15, 180);
+        current_angle = min(current_angle + 3, 180);
     } else if (msg->data == -1) {
-        current_angle = max(current_angle - 15, 0);
+        current_angle = max(current_angle - 3, 0);
     }
 
     servo.write(current_angle);
