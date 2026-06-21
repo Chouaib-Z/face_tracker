@@ -7,9 +7,9 @@
 #include <ESP32Servo.h>
 
 #define SERVO_PIN 13
-#define WIFI_SSID "Rouia"
-#define WIFI_PASS "tt555555"
-#define AGENT_IP  "192.168.222.232"
+#define WIFI_SSID "WIFI_SSID"
+#define WIFI_PASS "WIFI_PASS"
+#define AGENT_IP  "AGENT_IP"
 #define AGENT_PORT 8888
 
 Servo servo;
